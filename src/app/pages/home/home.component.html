@@ -1,0 +1,30 @@
+<!--[autosize] Recalcula los valores del contenedor en caso de el contenedor involcure algo dinamico
+    Todo lo que contiene la clase, es para centrar el contenedor-->
+<mat-drawer-container [autosize]="true" class="min-h-full max-w-7xl mx-auto border-x">
+    <!--Cambia como funciona el drawer actualmente esta en side lo que significa que empuja
+        el contenido principal y la propeidad 'opened' lo que hace es mantenrlo siempre abierto-->
+    <mat-drawer mode="side" opened class="p-6">
+        <app-filters (showCategory)="onShowCategory($event)"></app-filters>
+    </mat-drawer>
+    <mat-drawer-content class="p-6">
+        <app-products-header 
+        (columnsCountChange)="onColumnsCountChange($event)"
+        (itemsCountChange)="onItemsCountChange($event)"
+        (sortChange)="onSortChange($event)"
+        ></app-products-header>
+        <mat-grid-list 
+            gutterSize="16" 
+            [cols]="cols" 
+            [rowHeight]="rowHeight"
+            >
+            <mat-grid-tile *ngFor="let product of products">
+                <app-product-box 
+                [product]="product"
+                (addToCart)="onAddToCart($event)" 
+                class="w-full" 
+                [fullWidthMode]="cols === 1">
+                </app-product-box>
+            </mat-grid-tile> 
+        </mat-grid-list>
+    </mat-drawer-content>
+</mat-drawer-container>
